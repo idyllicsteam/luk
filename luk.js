@@ -32,7 +32,7 @@ function Luk() {
 			}
 
 			// String literal
-			case "StringLiteral": case "NumericLiteral": case "BooleanLiteral": {
+			case "StringLiteral": case "NumericLiteral": case "BooleanLiteral": case "NilLiteral": case "VarargLiteral": {
 				out.push(t.raw);
 				break;
 			}
@@ -92,6 +92,12 @@ function Luk() {
 				out.push("[");
 				this.process(t.index);
 				out.push("]");
+				break;
+			}
+			
+			case "BreakStatement": {
+				if (out[out.length - 1] != " ") out.push(" ");
+				out.push("break");
 				break;
 			}
 

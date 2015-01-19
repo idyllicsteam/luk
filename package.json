@@ -1,0 +1,20 @@
+{
+  "name": "luk",
+  "version": "1.0.0",
+  "description": "Luk the ugly Lua code generator.",
+  "main": "luk.js",
+  "scripts": {
+    "test": "rebuilder.js --file file1 --out file2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-idyllicsteam:idyllicsteam/luk.git"
+  },
+  "keywords": [
+    "lua",
+    "codegen",
+    "generator"
+  ],
+  "author": "idyllicsteam",
+  "license": "MIT"
+}

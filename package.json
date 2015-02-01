@@ -1,6 +1,6 @@
 {
   "name": "luk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Luk the ugly Lua code generator.",
   "main": "luk.js",
   "scripts": {

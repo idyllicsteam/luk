@@ -96,7 +96,7 @@ function Luk() {
 			}
 			
 			case "BreakStatement": {
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("break");
 				break;
 			}
@@ -115,7 +115,7 @@ function Luk() {
 						this.process(t.init[i]);
 					}
 				}
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				break;
 			}
 
@@ -130,7 +130,7 @@ function Luk() {
 					if (i > 0) out.push(",");
 					this.process(t.init[i]);
 				}
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				break;
 			}
 			
@@ -161,7 +161,7 @@ function Luk() {
 			// Function declaration
 			case "FunctionDeclaration": {
 				if (t.isLocal) out.push("local");
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				
 				out.push("function");
 				if (t.identifier) {
@@ -175,7 +175,7 @@ function Luk() {
 				}
 				out.push(")");
 				this.process(t.body);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("end");
 				out.push(" ");
 				break;
@@ -185,7 +185,7 @@ function Luk() {
 			case "IfStatement": {
 				for (var i = 0; i < t.clauses.length; i++)
 					this.process(t.clauses[i]);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("end");
 				out.push(" ");
 				break;
@@ -196,10 +196,10 @@ function Luk() {
 				out.push((t.type === "ElseifClause" ? "else" : "") + "if");
 				out.push(" ");
 				this.process(t.condition);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("then");
 				this.process(t.body);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				break;
 			}
 			
@@ -208,7 +208,7 @@ function Luk() {
 				out.push("else");
 				out.push(" ");
 				this.process(t.body);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				break;
 			}
 			
@@ -220,7 +220,7 @@ function Luk() {
 					if (i > 0) out.push(",");
 					this.process(t.arguments[i]);
 				}
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				break;
 			}
 			
@@ -237,15 +237,16 @@ function Luk() {
 					out.push(",");
 					this.process(t.step);
 				}
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("do");
 				this.process(t.body);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("end");
 				out.push(" ");
 				break;
 			}
 			
+			// For generic statement (for a, b in func() do)
 			case "ForGenericStatement": {
 				out.push("for");
 				out.push(" ");
@@ -253,17 +254,17 @@ function Luk() {
 					if (i > 0) out.push(",");
 					this.process(t.variables[i]);
 				}
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("in");
 				out.push(" ");
 				for (var i = 0; i < t.iterators.length; i++) {
 					if (i > 0) out.push(",");
 					this.process(t.iterators[i]);
 				}
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("do");
 				this.process(t.body);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("end");
 				out.push(" ");
 				break;
@@ -274,11 +275,11 @@ function Luk() {
 				out.push("while");
 				out.push(" ");
 				this.process(t.condition);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("do");
 				out.push(" ");
 				this.process(t.body);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("end");
 				out.push(" ");
 				break;
@@ -289,10 +290,21 @@ function Luk() {
 				out.push("repeat");
 				out.push(" ");
 				this.process(t.body);
-				if (out[out.length - 1] != " ") out.push(" ");
+				if (out[out.length - 1] !== " ") out.push(" ");
 				out.push("until");
 				out.push(" ");
 				this.process(t.condition);
+				break;
+			}
+
+			// Do statement
+			case "DoStatement": {
+				out.push("do");
+				out.push(" ");
+				this.process(t.body);
+				if (out[out.length - 1] !== " ") out.push(" ");
+				out.push("end");
+				out.push(" ");
 				break;
 			}
 				
@@ -306,7 +318,7 @@ function Luk() {
 			default: {
 				if (t.type) throw new Error("Unsupported tree element type \"" + t.type + "\". Generated code will be incorrect.");
 				for (var i = 0; i < t.length; i++) {
-					if (out[out.length - 1] != " ") out.push(" ");
+					if (out[out.length - 1] !== " ") out.push(" ");
 					this.process(t[i]);
 				}
 				break;
